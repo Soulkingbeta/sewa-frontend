@@ -90,12 +90,6 @@ const seriesData = {
   }
 };
 
-
-
-// In-memory PDF database
-let pdfDatabase = [];
-let nextId = 1000;
-
 // Initialize with sample data
 function initDatabase() {
   Object.entries(seriesData).forEach(([serie, sdata]) => {
@@ -216,12 +210,9 @@ function showSection(section) {
   return false;
 }
 
-// ===== DOWNLOAD SIMULATION =====
+// ===== DOWNLOAD  =====
 function downloadPdf(id) {
-  const pdf = pdfDatabase.find(p => p.id === id);
-  if (!pdf) return;
-  showToast(`📥 Téléchargement de "${pdf.title}" en cours…`);
-  // In a real app: window.open(pdf.url, '_blank');
+  window.open(`http://127.0.0.1:8000/download/${id}`, '_blank');
 }
 
 // ===== SEARCH =====
@@ -302,9 +293,6 @@ async function adminLogin() {
   }
 }
 
-
-
-
 // Subject selector based on serie
 document.getElementById("adminSerie").addEventListener('change', function() {
   const serie = this.value;
@@ -346,8 +334,6 @@ await fetch("http://127.0.0.1:8000/upload", {
   },
   body: formData
 });
-
-
 
   // Recharge depuis le backend
 await loadPdfs();
